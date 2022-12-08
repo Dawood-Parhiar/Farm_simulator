@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class DairyCow extends Animal implements IMilkable{
-    private static int DairyCowID = 0;
+    private static int DairyCowID = 1000;
     private int id;
     private String name;
     private int udderCapacity;
@@ -23,7 +23,7 @@ public class DairyCow extends Animal implements IMilkable{
         this.totalMilkProduced = 0;
     }
 
-    public static int getDairyCowID() {
+    public static double getDairyCowID() {
         return DairyCowID;
     }
 
@@ -46,6 +46,7 @@ public class DairyCow extends Animal implements IMilkable{
     public int getTotalMilkProduced() {
         return totalMilkProduced;
     }
+
 
     public DairyCow Cow(String name){
 

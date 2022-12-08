@@ -16,11 +16,13 @@ public class MilkingMachine {
 
     public MilkTank getMilkTank() {
 
-
-           return milkTank;
-
-        //or null
-
+        if(!(milkTank == null))
+        {
+            return milkTank;
+        }else
+        {
+            return null;
+        }
     }
 
     public void setMilkTank(MilkTank milkTank) {
@@ -29,6 +31,14 @@ public class MilkingMachine {
     }
     public void milk(IMilkable milkable)
     {
+        if(!(milkTank == null))
+        {
+            double milkProduced =  milkable.milk();
+            milkTank.addToTank(milkProduced);
+        }else
+        {
+            throw new IllegalStateException("No MilkTank Connected");
+        }
 
     }
 }

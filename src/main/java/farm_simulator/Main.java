@@ -8,6 +8,10 @@ public class Main {
         System.out.println("Welcome to the Farm Simulator");
         FarmControl();
     }
+    public void MainMenu()
+    {
+
+    }
 
     private static void FarmControl() {
         ArrayList<DairyCow> dairyCows = new ArrayList<>();
@@ -21,8 +25,8 @@ public class Main {
         Farm farm = new Farm("Dawood",herdDB,shedDataBase);
 
         Animal cow1 = new DairyCow(true,70.5,2,"Brownie");
-        Animal cow2 = new DairyCow(false,76.5,2,"Brownie");
-        Animal cow3 = new DairyCow(true,79.5,2,"Flat White");
+        DairyCow cow2 = new DairyCow(false,76.5,2,"Brownie");
+        DairyCow cow3 = new DairyCow(true,79.5,2,"Flat White");
         Animal cow4 = new DairyCow(false,80.5,2,"Brownie");
         Animal cow5 = new DairyCow(true,130.5,2,"Brownie");
 
@@ -34,7 +38,9 @@ public class Main {
 
         animals.add(cow1);
         animals.add(cow2);
-        animals.add(cow3);
+       // animals.add(cow3);
+        dairyCows.add(cow3);
+        dairyCows.add(cow2);
         animals.add(cow4);
         animals.add(cow5);
         animals.add(beefCow1);
@@ -46,12 +52,22 @@ public class Main {
         Shed shed1 = new Shed(milkTank);
         MilkingMachine machine = new MilkingMachine(milkTank);
 
-        shed1.milkAnimal(animals);
-        System.out.println(animals);
+        //shed1.milkAnimal(animals);
+        //shed1.milkAnimal(cow2);
+        //System.out.println(animals);
         farm.getHerdDB();
-        herdDB.deleteCow(3,"Flat White");
-        System.out.println(cow3);
+        System.out.println(cow3.getId());
+        herdDB.deleteCow(1003,"Flat White");
+       // System.out.println(cow3);
+        System.out.println(dairyCows);
+        //System.out.println(dairyCows);
 
+        DairyCow newCow = new DairyCow(false,105,7,"Kamri Dhaggi");
+        newCow.getPedigree();
+        herdDB.addCow(newCow);
+        System.out.println(dairyCows);
+        newCow.milk();
+        newCow.getTotalMilkProduced();
     }
 
 }

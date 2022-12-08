@@ -2,7 +2,7 @@ package farm_simulator;
 
 public class Sheep extends Animal{
 
-    private static int sheepID = 0;
+    private static int sheepID = 3000;
     private int id = ++sheepID;
     private String name;
 

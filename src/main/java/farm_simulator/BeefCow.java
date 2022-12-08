@@ -1,7 +1,7 @@
 package farm_simulator;
 
 public class BeefCow extends Animal{
-    private static int BeefCowID = 0;
+    private static int BeefCowID = 001;
     private int id;
     private String name;
 
@@ -11,7 +11,7 @@ public class BeefCow extends Animal{
         this.name = name;
     }
 
-    public static int getBeefCowID() {
+    public static double getBeefCowID() {
         return BeefCowID;
     }
 

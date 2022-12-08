@@ -2,6 +2,7 @@ package farm_simulator;
 
 public class Animal {
 
+
     private boolean pedigree;
     private double weight;
     private int age;

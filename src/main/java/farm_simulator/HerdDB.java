@@ -1,20 +1,24 @@
 package farm_simulator;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class HerdDB implements ISavable{
     private int farmID;
     private ArrayList<DairyCow> dairyCows;
+
     private ArrayList<BeefCow> beefCows;
+
     private ArrayList<Goat> goats;
+
     private ArrayList<Sheep> sheep;
 
+    private ArrayList<Animal> animals;
+
     static Scanner scanner = new Scanner(System.in);
+
     public HerdDB(int farmID, ArrayList<DairyCow> dairyCows, ArrayList<BeefCow> beefCows, ArrayList<Goat> goats, ArrayList<Sheep> sheep) {
         this.farmID = farmID;
         this.dairyCows = dairyCows;
@@ -43,11 +47,11 @@ public class HerdDB implements ISavable{
         return sheep;
     }
 
-    private DairyCow findAnimal(int id,String name)
+    private DairyCow findAnimal(int id, String name, List<DairyCow> dairyCows)
     {
-        for(int i=0; i < this.dairyCows.size(); i++)
+        for(int i=0; i < dairyCows.size(); i++)
         {
-            DairyCow checkedCow = this.dairyCows.get(i);
+            DairyCow checkedCow = dairyCows.get(i);
             if(checkedCow.getId() == id && checkedCow.getName().equals(name))
             {
                 return checkedCow;
@@ -55,29 +59,90 @@ public class HerdDB implements ISavable{
         }
         return null;
     }
-    public void deleteCow(int id, String name)
+    private int findAnimalIndex(Animal animal)
     {
-        DairyCow existCow = findAnimal(id,name);
-        if(existCow != null)
-        {
-            System.out.println(existCow);
-            System.out.println("1.  Confirm Delete");
-            System.out.println("2.  Cancel Delete");
-            int choice = scanner.nextInt();
-            if(choice == 1)
+        return this.animals.indexOf(animal);
+    }
+    private boolean findAnimalExistance(Animal animal)
+    {
+        for(Animal exist_animal : animals)
+        { if(exist_animal.equals(animal))
             {
-                dairyCows.remove(existCow);
-                System.out.println("Deleted");
-            }else
-            {
-                System.out.println("Cancelled Delete");
+                return true;
             }
+        }
+        return false;
+    }
+    public boolean updateAnimal(Animal oldAnimal, Animal newAnimal){
 
+        int foundPosition = findAnimalIndex(oldAnimal);
+
+        if(foundPosition < 0)
+        {
+            System.out.println(oldAnimal+ " was not found");
+            return false;
+        }
+        this.animals.set(foundPosition,newAnimal);
+        System.out.println(oldAnimal + " , was replaced with " + newAnimal);
+
+        return true;
+    }
+    public boolean deleteAnimal(Animal animal)
+    {
+
+        int index = findAnimalIndex(animal);
+
+        if(animal instanceof DairyCow)
+        {
+            dairyCows.remove(index);
+            return true;
+        }else if(animal instanceof BeefCow)
+        {
+            beefCows.remove(index);
+            return true;
+        }else if(animal instanceof Goat)
+        {
+            goats.remove(index);
+            return true;
+        }
+        else if(animal instanceof Sheep)
+        {
+            sheep.remove(index);
+            return true;
+        }else
+        {
+            return false;
         }
     }
 
-    public void addCow(DairyCow dairyCow){
-        dairyCows.add(dairyCow);
+    //Dylan Fennelly helped me to cover the code below.
+    public boolean addAnimal(Animal animal)
+    {
+        if(!(findAnimalExistance(animal)))
+        {
+            if(animal instanceof DairyCow)
+            {
+                dairyCows.add((DairyCow) animal);
+                return true;
+            }
+            else if(animal instanceof BeefCow)
+            {
+                beefCows.add((BeefCow) animal);
+                return true;
+            }else if(animal instanceof Sheep)
+            {
+                sheep.add((Sheep) animal);
+                return true;
+            }else if(animal instanceof Goat)
+            {
+                goats.add((Goat) animal);
+                return true;
+            }else
+            {
+                return false;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -88,13 +153,13 @@ public class HerdDB implements ISavable{
             String input;
             while ((input = fileReader.readLine()) != null)
             {
-//                String[] data = input.split(",");
-//                int id = Integer.parseInt(data[0]);
+//               String[] data = input.split(",");
+//                do id = Integer.parseInt(data[0]);
 //                String name = data[1];
 //                int health = Integer.parseInt(data[2]);
-//                Player tempPlayer = new Player(id,name,health);
-//                players.add(tempPlayer);
-                String[] data = input.split(",");
+//                DairyCow tempDairyCow = new DairyCow();
+//                animals.add(tempDairyCow);
+//                String[] data = input.split(",");
 
             }
         }
@@ -109,6 +174,15 @@ public class HerdDB implements ISavable{
     @Override
     public void saveToFile() {
 
+        try(BufferedWriter fileWriter = new BufferedWriter(new FileWriter("players.txt")))
+        {
+            for(Animal animal : animals)
+            {
+               // fileWriter.write();//animal.getId()+", "+ player.getName()+", "+ player.getHealth()+ "\n");
+                }
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+        }
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Goat extends Animal implements IMilkable{
 
-    private static int goatID = 0;
+    private static int goatID = 2000;
     private int id;
     private int udderCapacity;
     private int milkedPerDay;

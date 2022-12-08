@@ -40,19 +40,21 @@ public class Shed {
         // installs a milking
         //machine and connects it to the shed’s milk tank
         this.milkingMachine = milkingMachine;
-        setMilkingMachine(this.milkingMachine);
+        milkingMachine.setMilkTank(this.milkTank);
 
     }
     public void milkAnimal(IMilkable imilkable)
     {
         // milks the animal with the milking machine, the
         //method throws an IllegalStateException if the milking machine is not installed
-        for(Animal animal : animals)
-        {
+            if(!(milkingMachine == null))
+            {
+                milkingMachine.milk(imilkable);
+            }else
+            {
+                new IllegalStateException("Milking Machine is not installed");
+            }
 
-
-
-        }
 
     }
     public void milkAnimal(Collection<Animal> animals){
@@ -62,7 +64,13 @@ public class Shed {
             installed
          */
 
-
+            if(!(milkingMachine == null))
+            {
+                milkingMachine.milk(animals);
+            }else
+            {
+                new IllegalStateException("Milking Machine is not installed");
+            }
     }
     public String toString()
     {

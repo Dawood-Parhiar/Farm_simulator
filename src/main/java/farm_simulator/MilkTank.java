@@ -31,7 +31,8 @@ public class MilkTank {
 
     public void addToTank(double amount)
     {
-        if(amount+currentLevel <= this.capacity )
+        double temp = amount + currentLevel;
+        if(temp <= this.capacity )
         {
             this.capacity -= amount;
             this.currentLevel += amount;
