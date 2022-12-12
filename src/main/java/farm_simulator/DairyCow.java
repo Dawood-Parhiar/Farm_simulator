@@ -10,6 +10,8 @@ public class DairyCow extends Animal implements IMilkable{
     private int udderCapacity;
     private int milkedPerDay;
     private int totalMilkProduced;
+    private boolean canMilk;
+
 
     static Scanner scanner = new Scanner(System.in);
     static Random rand = new Random();
@@ -21,6 +23,11 @@ public class DairyCow extends Animal implements IMilkable{
         this.udderCapacity = 0;
         this.milkedPerDay = 0;
         this.totalMilkProduced = 0;
+        this.canMilk = true;
+    }
+
+    public boolean isCanMilk() {
+        return canMilk;
     }
 
     public static double getDairyCowID() {

@@ -36,14 +36,18 @@ public class Shed {
         return this.milkTank;
     }
 
+    public void setMilkTank(MilkTank milkTank) {
+        this.milkTank = milkTank;
+    }
+
     public void installMilkingMachine(MilkingMachine milkingMachine){
         // installs a milking
         //machine and connects it to the shed’s milk tank
         this.milkingMachine = milkingMachine;
-        milkingMachine.setMilkTank(this.milkTank);
+
 
     }
-    public void milkAnimal(IMilkable imilkable)
+    public boolean milkAnimal(IMilkable imilkable)
     {
         // milks the animal with the milking machine, the
         //method throws an IllegalStateException if the milking machine is not installed
@@ -54,8 +58,7 @@ public class Shed {
             {
                 new IllegalStateException("Milking Machine is not installed");
             }
-
-
+        return false;
     }
     public void milkAnimal(Collection<Animal> animals){
         /*
@@ -66,23 +69,28 @@ public class Shed {
 
             if(!(milkingMachine == null))
             {
-                milkingMachine.milk(animals);
+                for(Animal animal : animals)
+                {
+                    if(animal.isCanMilk())
+                    {
+                       // milkingMachine.milk(animal);
+                    }
+                }
             }else
             {
                 new IllegalStateException("Milking Machine is not installed");
             }
     }
-    public String toString()
-    {
-        //) returns the state of the milk tank contained in the shed
-        return "";
-    }
 
-    public void setMilkingMachine(MilkingMachine milkingMachine) {
-        this.milkingMachine = milkingMachine;
-    }
 
-    public void setMilkTank(MilkTank milkTank) {
-        this.milkTank = milkTank;
+
+    @Override
+    public String toString() {
+        return "Shed{" +
+                "id=" + id +
+                ", milkingMachine=" + milkingMachine +
+                ", milkTank=" + milkTank +
+                ", animals=" + animals +
+                '}';
     }
 }

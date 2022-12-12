@@ -25,11 +25,7 @@ public class MilkingMachine {
         }
     }
 
-    public void setMilkTank(MilkTank milkTank) {
-        this.milkTank = milkTank;
-
-    }
-    public void milk(IMilkable milkable)
+    public boolean milk(IMilkable milkable)
     {
         if(!(milkTank == null))
         {
@@ -39,6 +35,14 @@ public class MilkingMachine {
         {
             throw new IllegalStateException("No MilkTank Connected");
         }
+        return false;
+    }
 
+    @Override
+    public String toString() {
+        return "\n  MilkingMachine{" +
+                "id=" + id +
+                ", milkTank=" + milkTank +
+                '}';
     }
 }

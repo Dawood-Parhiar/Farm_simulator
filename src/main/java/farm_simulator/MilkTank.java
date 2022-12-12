@@ -57,7 +57,7 @@ public class MilkTank {
 
     @Override
     public String toString() {
-        return "MilkTank{" +
+        return "\n  MilkTank{" +
                 "milkTankID=" + tankID +
                 ", capacity=" + capacity +
                 ", currentLevel=" + currentLevel +

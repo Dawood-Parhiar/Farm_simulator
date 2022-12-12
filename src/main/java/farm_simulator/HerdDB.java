@@ -2,7 +2,6 @@ package farm_simulator;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class HerdDB implements ISavable{
@@ -19,12 +18,13 @@ public class HerdDB implements ISavable{
 
     static Scanner scanner = new Scanner(System.in);
 
-    public HerdDB(int farmID, ArrayList<DairyCow> dairyCows, ArrayList<BeefCow> beefCows, ArrayList<Goat> goats, ArrayList<Sheep> sheep) {
+    public HerdDB(int farmID, ArrayList<DairyCow> dairyCows, ArrayList<BeefCow> beefCows, ArrayList<Goat> goats, ArrayList<Sheep> sheep, ArrayList<Animal> animals) {
         this.farmID = farmID;
         this.dairyCows = dairyCows;
         this.beefCows = beefCows;
         this.goats = goats;
         this.sheep = sheep;
+        this.animals = animals;
     }
 
     public int getFarmID() {
@@ -47,7 +47,8 @@ public class HerdDB implements ISavable{
         return sheep;
     }
 
-    private DairyCow findAnimal(int id, String name, List<DairyCow> dairyCows)
+
+    public DairyCow findDairyCowByName(int id, String name, ArrayList<DairyCow> dairyCows)
     {
         for(int i=0; i < dairyCows.size(); i++)
         {
@@ -59,14 +60,53 @@ public class HerdDB implements ISavable{
         }
         return null;
     }
+    public Goat findGoatByName(int id, String name, ArrayList<Goat> goats)
+    {
+        for(int i=0; i < goats.size(); i++)
+        {
+            Goat checked = goats.get(i);
+            if(checked.getId() == id && checked.getName().equals(name))
+            {
+                return checked;
+            }
+        }
+        return null;
+    }
+    public Sheep findSheepByName(int id, String name, ArrayList<Sheep> sheep)
+    {
+        for(int i=0; i < sheep.size(); i++)
+        {
+            Sheep checked = sheep.get(i);
+            if(checked.getId() == id && checked.getName().equals(name))
+            {
+                return checked;
+            }
+        }
+        return null;
+    }
+    public BeefCow findBeefCowByName(int id, String name, ArrayList<BeefCow> beefCows)
+    {
+        for(int i=0; i < beefCows.size(); i++)
+        {
+            BeefCow checked = beefCows.get(i);
+            if(checked.getId() == id && checked.getName().equals(name))
+            {
+                return checked;
+            }
+        }
+        return null;
+    }
+
     private int findAnimalIndex(Animal animal)
     {
+        System.out.println("inside find Animal :::  "+this.animals.size());
         return this.animals.indexOf(animal);
     }
     private boolean findAnimalExistance(Animal animal)
     {
-        for(Animal exist_animal : animals)
-        { if(exist_animal.equals(animal))
+        for(Animal exist_animal : this.animals)
+        {
+            if(exist_animal.equals(animal))
             {
                 return true;
             }
@@ -148,19 +188,23 @@ public class HerdDB implements ISavable{
     @Override
     public void loadFromFile() {
 
-        try(BufferedReader fileReader = new BufferedReader(new FileReader("players.txt")))
+        try(BufferedReader fileReader = new BufferedReader(new FileReader("animals.txt")))
         {
             String input;
             while ((input = fileReader.readLine()) != null)
             {
-//               String[] data = input.split(",");
-//                do id = Integer.parseInt(data[0]);
-//                String name = data[1];
-//                int health = Integer.parseInt(data[2]);
-//                DairyCow tempDairyCow = new DairyCow();
-//                animals.add(tempDairyCow);
-//                String[] data = input.split(",");
+                String[] data = input.split(",");
+                int id = Integer.parseInt(data[0]);
 
+                boolean pedigree = Boolean.parseBoolean(data[1]);
+
+                double weight = Double.parseDouble(data[2]);
+
+                int age = Integer.parseInt(data[3]);
+
+                String name = data[4];
+                Animal tempAnimal = new Animal(pedigree,weight,age);
+                animals.add(tempAnimal);
             }
         }
         catch(FileNotFoundException fnfe)
@@ -174,12 +218,13 @@ public class HerdDB implements ISavable{
     @Override
     public void saveToFile() {
 
-        try(BufferedWriter fileWriter = new BufferedWriter(new FileWriter("players.txt")))
+
+        try(BufferedWriter fileWriter = new BufferedWriter(new FileWriter("animals.txt")))
         {
             for(Animal animal : animals)
             {
-               // fileWriter.write();//animal.getId()+", "+ player.getName()+", "+ player.getHealth()+ "\n");
-                }
+               fileWriter.write(animal.toString());
+            }
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
         }
@@ -187,7 +232,7 @@ public class HerdDB implements ISavable{
 
     @Override
     public String toString() {
-        return "HerdDB{" +
+        return "\n  HerdDB{" +
                 "farmID=" + farmID +
                 ", dairyCows=" + dairyCows +
                 ", beefCows=" + beefCows +

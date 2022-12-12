@@ -10,7 +10,7 @@ public class Goat extends Animal implements IMilkable{
     private int milkedPerDay;
     private int totalMilkProduced;
     private String name;
-
+    private boolean canMilk;
     static Random rand = new Random();
     public Goat(boolean pedigree, double weight, int age,String name) {
         super(pedigree, weight, age);
@@ -19,10 +19,13 @@ public class Goat extends Animal implements IMilkable{
         this.milkedPerDay = 1;
         this.totalMilkProduced = 0;
         this.name = name;
-
+        this.canMilk = true;
     }
 
 
+    public boolean isCanMilk() {
+        return canMilk;
+    }
 
     public static int getGoatID() {
         return goatID;
