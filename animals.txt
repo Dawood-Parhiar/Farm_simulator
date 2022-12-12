@@ -1,0 +1,15 @@
+DairyCow{
+ id=1001
+ name='brownie', pedigree='true', weight='78.0', age='8'
+ udderCapacity=0
+ milkedPerDay=0
+ totalMilkProduced=0}
+Goat{
+ id=2001,
+ name=dottie,
+ pedigree='false',
+ weight='78.0',
+ age='4',
+ udderCapacity=0,
+ milkedPerDay=1,
+ totalMilkProduced=0}
